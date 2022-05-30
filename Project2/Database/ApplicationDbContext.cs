@@ -30,13 +30,6 @@ namespace Project2.Database
                     entityType.SetTableName(tableName.Substring(6));
                 }
             }
-            builder.Entity<Cart>().HasKey(table => new
-            {
-                table.CartId,
-                table.ProductId,
-                table.Id
-            });
-           
         }
     } 
 }

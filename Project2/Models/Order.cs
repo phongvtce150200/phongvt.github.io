@@ -11,9 +11,13 @@ namespace Project2.Models
     public class Order
     {
         [Key]
+        [Column(Order = 0)]
         public int OrderId { get; set; }
-        public int ProductId { get; set; }
-        [ForeignKey("ProductId")]
-        public Product Product { get; set; }
+        public string Id { get; set; }
+        
+        [ForeignKey("OrderId")]
+        public OrderDetails OrderDetails {get; set;}
+        [ForeignKey("Id")]
+        public User User { get; set; }
     }
 }

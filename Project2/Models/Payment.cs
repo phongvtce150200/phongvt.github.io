@@ -30,6 +30,7 @@ namespace Project2.Models
         public string Address { get; set; }
         [Column(TypeName = "varchar(50)")]
         public string PaymentMode { get; set; }
+        [ForeignKey("Id")]
         public User User { get; set; }
         public ICollection<OrderDetails> OrderDetails { get; set; }
     }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Project2.Database;
 
 namespace Project2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220530042312_MyMigration")]
+    partial class MyMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -198,15 +200,15 @@ namespace Project2.Migrations
 
             modelBuilder.Entity("Project2.Models.Order", b =>
                 {
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("OrderId");
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("Id");
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
 
                     b.ToTable("Order");
                 });
@@ -273,7 +275,7 @@ namespace Project2.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PaymentMode")
                         .HasColumnType("varchar(50)");
@@ -282,9 +284,12 @@ namespace Project2.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("PaymentId");
 
-                    b.HasIndex("Id");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Payment");
                 });
@@ -482,7 +487,9 @@ namespace Project2.Migrations
                 {
                     b.HasOne("Project2.Models.User", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("Id");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Project2.Models.OrderDetails", "OrderDetails")
                         .WithMany("orders")
@@ -524,7 +531,7 @@ namespace Project2.Migrations
                 {
                     b.HasOne("Project2.Models.User", "User")
                         .WithMany("Payments")
-                        .HasForeignKey("Id");
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });

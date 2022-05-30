@@ -28,6 +28,5 @@ namespace Project2.Models
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
         public ICollection<Cart> Carts { get; set; }
-        public ICollection<Order> Orders { get; set; }
     }
 }

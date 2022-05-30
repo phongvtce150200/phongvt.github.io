@@ -10,8 +10,8 @@ using Project2.Database;
 namespace Project2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220529050817_Database")]
-    partial class Database
+    [Migration("20220530042735_UpdateDB30.5")]
+    partial class UpdateDB305
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -155,18 +155,20 @@ namespace Project2.Migrations
             modelBuilder.Entity("Project2.Models.Cart", b =>
                 {
                     b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasKey("CartId", "ProductId", "Id");
+                    b.HasKey("CartId");
 
                     b.HasIndex("Id");
 
@@ -199,16 +201,14 @@ namespace Project2.Migrations
             modelBuilder.Entity("Project2.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ProductId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("ProductId");
+                    b.HasIndex("Id");
 
                     b.ToTable("Order");
                 });
@@ -216,6 +216,11 @@ namespace Project2.Migrations
             modelBuilder.Entity("Project2.Models.OrderDetails", b =>
                 {
                     b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CartId")
                         .HasColumnType("int");
 
                     b.Property<float>("Discount")
@@ -237,6 +242,8 @@ namespace Project2.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("OrderId");
+
+                    b.HasIndex("CartId");
 
                     b.HasIndex("Id");
 
@@ -463,9 +470,7 @@ namespace Project2.Migrations
                 {
                     b.HasOne("Project2.Models.User", "User")
                         .WithMany("Carts")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Id");
 
                     b.HasOne("Project2.Models.Product", "Product")
                         .WithMany("Carts")
@@ -480,26 +485,32 @@ namespace Project2.Migrations
 
             modelBuilder.Entity("Project2.Models.Order", b =>
                 {
-                    b.HasOne("Project2.Models.Product", "Product")
+                    b.HasOne("Project2.Models.User", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("ProductId")
+                        .HasForeignKey("Id");
+
+                    b.HasOne("Project2.Models.OrderDetails", "OrderDetails")
+                        .WithMany("orders")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("OrderDetails");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Project2.Models.OrderDetails", b =>
                 {
+                    b.HasOne("Project2.Models.Cart", "Cart")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Project2.Models.User", "Users")
                         .WithMany("OrderDetails")
                         .HasForeignKey("Id");
-
-                    b.HasOne("Project2.Models.Order", "order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.HasOne("Project2.Models.Payment", "Payment")
                         .WithMany("OrderDetails")
@@ -507,7 +518,7 @@ namespace Project2.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("order");
+                    b.Navigation("Cart");
 
                     b.Navigation("Payment");
 
@@ -534,9 +545,19 @@ namespace Project2.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Project2.Models.Cart", b =>
+                {
+                    b.Navigation("OrderDetails");
+                });
+
             modelBuilder.Entity("Project2.Models.Category", b =>
                 {
                     b.Navigation("Products");
+                });
+
+            modelBuilder.Entity("Project2.Models.OrderDetails", b =>
+                {
+                    b.Navigation("orders");
                 });
 
             modelBuilder.Entity("Project2.Models.Payment", b =>
@@ -547,8 +568,6 @@ namespace Project2.Migrations
             modelBuilder.Entity("Project2.Models.Product", b =>
                 {
                     b.Navigation("Carts");
-
-                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Project2.Models.User", b =>
@@ -556,6 +575,8 @@ namespace Project2.Migrations
                     b.Navigation("Carts");
 
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("Orders");
 
                     b.Navigation("Payments");
                 });
