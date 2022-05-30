@@ -26,7 +26,8 @@ namespace Project2.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Ok(_context.categories);
+            var cat = _context.categories.ToList();
+            return Ok(cat);
         }
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetById(string Id)
@@ -121,6 +122,6 @@ namespace Project2.Controllers
             }
         }
 
-    
+
     }
 }

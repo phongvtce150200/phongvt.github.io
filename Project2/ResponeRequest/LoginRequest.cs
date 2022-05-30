@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace FoodStoreProject.ResponeRequest
+namespace Project2.ResponeRequest
 {
     public class LoginRequest
     {

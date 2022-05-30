@@ -26,7 +26,6 @@ G:\C#\Project2\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
 G:\C#\Project2\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 G:\C#\Project2\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 G:\C#\Project2\bin\Debug\net5.0\Microsoft.OpenApi.dll
-G:\C#\Project2\bin\Debug\net5.0\Newtonsoft.Json.dll
 G:\C#\Project2\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 G:\C#\Project2\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 G:\C#\Project2\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -63,3 +62,4 @@ G:\C#\Project2\obj\Debug\net5.0\refint\Project2.dll
 G:\C#\Project2\obj\Debug\net5.0\Project2.pdb
 G:\C#\Project2\obj\Debug\net5.0\Project2.genruntimeconfig.cache
 G:\C#\Project2\obj\Debug\net5.0\ref\Project2.dll
+G:\C#\Project2\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
