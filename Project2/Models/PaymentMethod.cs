@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Project2.Models
 {
-    [Table("Order")]
-    public class Order
+    [Table("PaymentMethod")]
+    public class PaymentMethod
     {
         [Key]
-        public int OrderId { get; set; }
-        public string Id { get; set; }
-        [ForeignKey("Id")]
-        public User User { get; set; }
+        public int PaymentMethodId { get; set; }
+        [Column(TypeName = "varchar(50)")]
+        [Required]
+        public string PaymentMethodName { get; set; }
         public ICollection<OrderDetails> OrderDetails { get; set; }
     }
 }

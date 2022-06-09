@@ -10,7 +10,7 @@ using Project2.Database;
 namespace Project2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220530042312_MyMigration")]
+    [Migration("20220609055127_MyMigration")]
     partial class MyMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -162,19 +162,42 @@ namespace Project2.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
-
                     b.HasKey("CartId");
 
                     b.HasIndex("Id");
 
+                    b.ToTable("Cart");
+                });
+
+            modelBuilder.Entity("Project2.Models.CartDetails", b =>
+                {
+                    b.Property<int>("CartDetailsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("CartStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalMoney")
+                        .HasColumnType("Money");
+
+                    b.HasKey("CartDetailsId");
+
+                    b.HasIndex("CartId");
+
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Cart");
+                    b.ToTable("CartDetails");
                 });
 
             modelBuilder.Entity("Project2.Models.Category", b =>
@@ -198,100 +221,108 @@ namespace Project2.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("Project2.Models.Order", b =>
+            modelBuilder.Entity("Project2.Models.ImageList", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("ImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ImageId");
+
+                    b.ToTable("ImageList");
+                });
+
+            modelBuilder.Entity("Project2.Models.Notification", b =>
+                {
+                    b.Property<int>("NotificationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("NotificationType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("NotificationId");
 
                     b.HasIndex("OrderId");
+
+                    b.ToTable("Notification");
+                });
+
+            modelBuilder.Entity("Project2.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("Id");
 
                     b.ToTable("Order");
                 });
 
             modelBuilder.Entity("Project2.Models.OrderDetails", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("OrderDetailsId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<float>("Discount")
-                        .HasColumnType("real");
-
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("OrderDate")
+                    b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("PaymentId")
+                    b.Property<int>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("money");
+                    b.Property<bool>("OrderStatus")
+                        .HasColumnType("bit");
 
-                    b.Property<int>("Quantity")
+                    b.Property<int>("PaymentMethodId")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId");
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("CartId");
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("Money");
 
-                    b.HasIndex("Id");
+                    b.HasKey("OrderDetailsId");
 
-                    b.HasIndex("PaymentId");
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("PaymentMethodId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("Project2.Models.Payment", b =>
+            modelBuilder.Entity("Project2.Models.PaymentMethod", b =>
                 {
-                    b.Property<int>("PaymentId")
+                    b.Property<int>("PaymentMethodId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Address")
-                        .HasColumnType("varchar(max)");
-
-                    b.Property<string>("CardNo")
+                    b.Property<string>("PaymentMethodName")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int>("CvvNo")
-                        .HasMaxLength(3)
-                        .HasColumnType("int");
+                    b.HasKey("PaymentMethodId");
 
-                    b.Property<string>("ExpiryDate")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PaymentMode")
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("PaymentName")
-                        .IsRequired()
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("PaymentId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Payment");
+                    b.ToTable("PaymentMethod");
                 });
 
             modelBuilder.Entity("Project2.Models.Product", b =>
@@ -310,8 +341,8 @@ namespace Project2.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageUrl")
-                        .HasColumnType("varchar(max)");
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -327,6 +358,8 @@ namespace Project2.Migrations
                     b.HasKey("ProductId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("ImageId");
 
                     b.ToTable("Product");
                 });
@@ -472,68 +505,73 @@ namespace Project2.Migrations
                         .WithMany("Carts")
                         .HasForeignKey("Id");
 
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Project2.Models.CartDetails", b =>
+                {
+                    b.HasOne("Project2.Models.Cart", "Cart")
+                        .WithMany("CartDetails")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Project2.Models.Product", "Product")
-                        .WithMany("Carts")
+                        .WithMany("CartDetails")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Product");
+                    b.Navigation("Cart");
 
-                    b.Navigation("User");
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Project2.Models.Notification", b =>
+                {
+                    b.HasOne("Project2.Models.Order", "Order")
+                        .WithMany("Notifications")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("Project2.Models.Order", b =>
                 {
                     b.HasOne("Project2.Models.User", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Project2.Models.OrderDetails", "OrderDetails")
-                        .WithMany("orders")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("OrderDetails");
+                        .HasForeignKey("Id");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Project2.Models.OrderDetails", b =>
                 {
-                    b.HasOne("Project2.Models.Cart", "Cart")
+                    b.HasOne("Project2.Models.Order", "Order")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("CartId")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Project2.Models.User", "Users")
+                    b.HasOne("Project2.Models.PaymentMethod", "PaymentMethod")
                         .WithMany("OrderDetails")
-                        .HasForeignKey("Id");
-
-                    b.HasOne("Project2.Models.Payment", "Payment")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("PaymentId")
+                        .HasForeignKey("PaymentMethodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Cart");
+                    b.HasOne("Project2.Models.Product", "Product")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Payment");
+                    b.Navigation("Order");
 
-                    b.Navigation("Users");
-                });
+                    b.Navigation("PaymentMethod");
 
-            modelBuilder.Entity("Project2.Models.Payment", b =>
-                {
-                    b.HasOne("Project2.Models.User", "User")
-                        .WithMany("Payments")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("User");
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Project2.Models.Product", b =>
@@ -544,12 +582,20 @@ namespace Project2.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Project2.Models.ImageList", "ImageList")
+                        .WithMany("Carts")
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Category");
+
+                    b.Navigation("ImageList");
                 });
 
             modelBuilder.Entity("Project2.Models.Cart", b =>
                 {
-                    b.Navigation("OrderDetails");
+                    b.Navigation("CartDetails");
                 });
 
             modelBuilder.Entity("Project2.Models.Category", b =>
@@ -557,30 +603,35 @@ namespace Project2.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Project2.Models.OrderDetails", b =>
+            modelBuilder.Entity("Project2.Models.ImageList", b =>
                 {
-                    b.Navigation("orders");
+                    b.Navigation("Carts");
                 });
 
-            modelBuilder.Entity("Project2.Models.Payment", b =>
+            modelBuilder.Entity("Project2.Models.Order", b =>
+                {
+                    b.Navigation("Notifications");
+
+                    b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("Project2.Models.PaymentMethod", b =>
                 {
                     b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("Project2.Models.Product", b =>
                 {
-                    b.Navigation("Carts");
+                    b.Navigation("CartDetails");
+
+                    b.Navigation("OrderDetails");
                 });
 
             modelBuilder.Entity("Project2.Models.User", b =>
                 {
                     b.Navigation("Carts");
 
-                    b.Navigation("OrderDetails");
-
                     b.Navigation("Orders");
-
-                    b.Navigation("Payments");
                 });
 #pragma warning restore 612, 618
         }

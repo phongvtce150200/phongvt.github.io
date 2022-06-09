@@ -20,13 +20,15 @@ namespace Project2.Models
         [Required(ErrorMessage = "Price of product can't be blank")]
         [Column(TypeName = "Money")]
         public decimal Price { get; set; }
-        [Column(TypeName = "varchar(max)")]
-        public string ImageUrl { get; set; } = null;
+        public int ImageId { get; set; }
         public bool IsActive { get; set; } = true;
         public DateTime CreatedDate { get; set; } = DateTime.Today;
+        [ForeignKey("ImageId")]
+        public virtual ImageList ImageList {get; set;}
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
-        public ICollection<Cart> Carts { get; set; }
+        public ICollection<CartDetails> CartDetails { get; set; }
+        public ICollection<OrderDetails> OrderDetails { get; set; }
     }
 }

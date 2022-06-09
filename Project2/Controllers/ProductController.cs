@@ -51,7 +51,7 @@ namespace FoodStoreProject.Controllers
                     ProductName = modelView.ProductName,
                     Description = modelView.Description,
                     Price = modelView.Price,
-                    ImageUrl = modelView.ProductImage,
+                    ImageId = 1,
                     CategoryId = modelView.CategoryId
                 };
                 _context.Add(newProduct);
@@ -73,7 +73,7 @@ namespace FoodStoreProject.Controllers
                 EditPro.ProductName = modelView.ProductName;
                 EditPro.Description = modelView.Description;
                 EditPro.Price = modelView.Price;
-                EditPro.ImageUrl = modelView.ProductImage;
+                // EditPro.ImageUrl = modelView.ProductImage;
                 EditPro.CategoryId = modelView.CategoryId;
                 _context.products.Update(EditPro);
                 _context.SaveChanges();

@@ -22,8 +22,7 @@ namespace Project2.Models
         public string Address { get; set; }
         public DateTime CreatedDate { get; set; } = DateTime.Today;
         public ICollection<Cart> Carts { get; set; }
-        public ICollection<OrderDetails> OrderDetails { get; set; }
-        public ICollection<Payment> Payments { get; set; }
         public ICollection<Order> Orders {get; set;}
+        
     }
 }

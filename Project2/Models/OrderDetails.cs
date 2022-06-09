@@ -11,21 +11,19 @@ namespace Project2.Models
     public class OrderDetails
     {
         [Key]
+        public int OrderDetailsId { get; set; }
         public int OrderId { get; set; }
-        public string Id { get; set; }
-        public int PaymentId { get; set; }
-        public int CartId { get; set; }
-        [Column(TypeName = "money")]
-        public decimal Price { get; set; }
-        public DateTime OrderDate { get; set; }
-        public int Quantity { get; set; }
-        public float Discount { get; set; }
-        [ForeignKey("Id")]
-        public User Users { get; set; }
-        [ForeignKey("PaymentId")]
-        public Payment Payment { get; set; }
-        [ForeignKey("CartId")]
-        public Cart Cart {get; set;}
-        public ICollection<Order> orders {get; set;}
+        public int PaymentMethodId { get; set; }
+        public int ProductId { get; set; }
+        public DateTime CreatedDate { get; set; }
+        [Column(TypeName = "Money")]
+        public decimal TotalPrice { get; set; }
+        public bool OrderStatus { get; set; } = false;
+        [ForeignKey("OrderId")]
+        public Order Order { get; set; }
+        [ForeignKey("PaymentMethodId")]
+        public PaymentMethod PaymentMethod { get; set; }
+        [ForeignKey("ProductId")]
+        public Product Product { get; set; }
     }
 }
