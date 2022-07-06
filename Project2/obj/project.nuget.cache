@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Pef9GwA8qam9CEVWoy/48einAAE5zOhmrJpa/KFRDoAkjLMg4GMJf5rtj7mgz0OACg0+GKpGfDj2k/DFhmfvsw==",
+  "dgSpecHash": "keLDm1pKu5u1N2kgifR7wGS6PwKhzjStlBh0GnIYac2EH9a5oYNvXVXyGZG1CHDbDOuAFGlwoJlGCAp05pG2Dw==",
   "success": true,
   "projectFilePath": "G:\\C#\\Project2\\Project2.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\vthan\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
+    "C:\\Users\\vthan\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\5.0.17\\microsoft.aspnetcore.authentication.google.5.0.17.nupkg.sha512",
     "C:\\Users\\vthan\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\5.0.17\\microsoft.aspnetcore.authentication.jwtbearer.5.0.17.nupkg.sha512",
     "C:\\Users\\vthan\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\5.0.17\\microsoft.aspnetcore.cryptography.internal.5.0.17.nupkg.sha512",
     "C:\\Users\\vthan\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\5.0.17\\microsoft.aspnetcore.cryptography.keyderivation.5.0.17.nupkg.sha512",
