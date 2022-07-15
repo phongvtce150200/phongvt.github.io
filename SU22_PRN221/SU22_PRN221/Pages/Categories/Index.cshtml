@@ -34,8 +34,6 @@
             <!-- end pageheader  -->
             <!-- ============================================================== -->
             <div class="ecommerce-widget">
-
-
                 <div class="row">
                     <!-- ============================================================== -->
                     <!-- ============================================================== -->
@@ -44,6 +42,7 @@
                     <div class="col-12">
                         <div class="card">
                             <h5 class="card-header">Category</h5>
+                            <a href="#addCategoryMethod" class="btn btn-success" data-toggle="modal"><i class="material-icons"></i><span>Add New</span></a>
                             <div class="card-body p-0">
                                 <div class="table-responsive">
                                     <table class="table">
@@ -76,11 +75,13 @@
                                                     <td>
                                                         @Html.DisplayFor(modelItem => item.CreatedDate)
                                                     </td>
-                                            
+
                                                     <td>
-                                                        <a asp-page="./Edit" asp-route-id="@item.CategoryId">Edit</a> |
-                                                        <a asp-page="./Details" asp-route-id="@item.CategoryId">Details</a> |
-                                                        <a asp-page="./Delete" asp-route-id="@item.CategoryId">Delete</a>
+                                                       
+                                                        <a href="#editCategoryMethod" class="edit" data-toggle="modal">Edit</a> |
+                                                        <a href="#deleteCategoryMethod" class="delete" data-toggle="modal">Delete</a>
+                                                        <input type="hidden" name="id" id="id" asp-for="@item.CategoryId">
+                                                        
                                                     </td>
                                                 </tr>
                                             }
@@ -98,8 +99,103 @@
             </div>
         </div>
     </div>
-    
+</div>
+<!-- Add Modal Html -->
+<div id="addCategoryMethod" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page="Index" asp-page-handler="Create">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Category</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Category Name</label>
+                            <input type="text" class="form-control" name="categoryName" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
+                        <input type="submit" class="btn btn-success" value="Add" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="editCategoryMethod" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page="Index" asp-page-handler="Update">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Category</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Category Name</label>
+                            <input type="text" class="form-control" name="categoryName" id="categoryName" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
+                        <input type="submit" class="btn btn-success" value="Add" />
+                        <input type="hidden" name="id" id="id"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="deleteCategoryMethod" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page="Index" asp-page-handler="Delete">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Category</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="modal-body">
+                        <p>Are you want to delete these record ?</p>
+                        <p class="text-warning"><small>This action cannot be undone</small></p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
+                        <input type="submit" class="btn btn-danger" value="Delete" />
+                        <input type="hidden" name="id" id="id" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- ============================================================== -->
 <!-- end wrapper  -->
 <!-- ============================================================== -->
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $('table .delete').on('click', function() {
+            var id = $(this).parent().find('#id').val();
+            $('#deleteCategoryMethod #id').val(id);
+        });
+
+    });
+
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+
+        $('table .edit').on('click', function() {
+            var id = $(this).parent().find('#id').val();
+            $.ajax({
+                type: 'GET',
+                data: {id: id},
+                url: '@Url.Page("Index","Find")',
+                success: function(result) {
+                    $('#editCategoryMethod #id').val(id)
+                    $('#editCategoryMethod #categoryName').val(result.categoryName);
+                }
+            })
+        });
+
+    });
+</script>
