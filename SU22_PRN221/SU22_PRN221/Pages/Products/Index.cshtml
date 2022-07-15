@@ -1,0 +1,129 @@
+﻿@page
+@model SU22_PRN221.Pages.Products.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_LayoutStaff.cshtml";
+}
+
+
+<!-- ============================================================== -->
+<!-- wrapper  -->
+<!-- ============================================================== -->
+<div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+            <!-- ============================================================== -->
+            <!-- pageheader  -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">Product Manage </h2>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Product</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- end pageheader  -->
+            <!-- ============================================================== -->
+            <div class="ecommerce-widget">
+
+
+                <div class="row">
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- recent orders  -->
+                    <!-- ============================================================== -->
+                    <div class="col-12">
+                        <div class="card">
+                            <h5 class="card-header">Product</h5>
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="bg-light">
+                                            <tr class="border-0">
+                                                <th class="border-0">#</th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Product[0].ProductName)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Product[0].Description)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Product[0].Price)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Product[0].ImagePath)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Product[0].IsActive)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Product[0].CreatedDate)
+                                                </th>
+                                                <th>
+                                                    @Html.DisplayNameFor(model => model.Product[0].Category)
+                                                </th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.Product)
+                                            {
+                                                <tr>
+                                                    <td>@item.CategoryId</td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.ProductName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Description)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Price)
+                                                    </td>
+                                                    <td>
+                                                        <img src="@item.ImagePath" style="height : 300px; width : 300px;">
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.IsActive)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                                                    </td>
+                                                    <td>
+                                                        <a asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a> |
+                                                        <a asp-page="./Details" asp-route-id="@item.ProductId">Details</a> |
+                                                        <a asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end recent orders  -->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- ============================================================== -->
+<!-- end wrapper  -->
+<!-- ============================================================== -->
