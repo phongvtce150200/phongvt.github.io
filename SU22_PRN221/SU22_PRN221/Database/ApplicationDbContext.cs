@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SU22_PRN221.Models;
 
 namespace SU22_PRN221.Database
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -16,7 +18,6 @@ namespace SU22_PRN221.Database
         public DbSet<Order> orders { get; set; }
         public DbSet<OrderDetails> orderDetails { get; set; }
         public DbSet<PaymentMethod> paymentMethods { get; set; }
-        public DbSet<User> users { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -31,6 +32,8 @@ namespace SU22_PRN221.Database
                     entityType.SetTableName(tableName.Substring(6));
                 }
             }
+            builder.Entity<OrderDetails>().HasKey(x => new { x.OrderId, x.ProductId });
+            builder.Entity<CartDetails>().HasKey(x => new { x.CartId, x.ProductId });
         }
     }
 }

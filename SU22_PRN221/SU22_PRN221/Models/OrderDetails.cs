@@ -8,18 +8,12 @@ namespace SU22_PRN221.Models
     public class OrderDetails
     {
         [Key]
-        public int OrderDetailsId { get; set; }
         public int OrderId { get; set; }
-        public int PaymentMethodId { get; set; }
+        [Key]
         public int ProductId { get; set; }
-        public DateTime CreatedDate { get; set; }
-        [Column(TypeName = "Money")]
-        public decimal TotalPrice { get; set; }
-        public bool OrderStatus { get; set; } = false;
+        public int Quantity { get; set; }
         [ForeignKey("OrderId")]
         public Order Order { get; set; }
-        [ForeignKey("PaymentMethodId")]
-        public PaymentMethod PaymentMethod { get; set; }
         [ForeignKey("ProductId")]
         public Product Product { get; set; }
     }
