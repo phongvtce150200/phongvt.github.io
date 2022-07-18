@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "G:\\PRN221\\SU22_PRN221\\SU22_PRN221\\SU22_PRN221.csproj": {}
+    "C:\\Users\\vthan\\Downloads\\SU22_PRN2212\\SU22_PRN2212\\SU22_PRN221\\SU22_PRN221.csproj": {}
   },
   "projects": {
-    "G:\\PRN221\\SU22_PRN221\\SU22_PRN221\\SU22_PRN221.csproj": {
+    "C:\\Users\\vthan\\Downloads\\SU22_PRN2212\\SU22_PRN2212\\SU22_PRN221\\SU22_PRN221.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\PRN221\\SU22_PRN221\\SU22_PRN221\\SU22_PRN221.csproj",
+        "projectUniqueName": "C:\\Users\\vthan\\Downloads\\SU22_PRN2212\\SU22_PRN2212\\SU22_PRN221\\SU22_PRN221.csproj",
         "projectName": "SU22_PRN221",
-        "projectPath": "G:\\PRN221\\SU22_PRN221\\SU22_PRN221\\SU22_PRN221.csproj",
+        "projectPath": "C:\\Users\\vthan\\Downloads\\SU22_PRN2212\\SU22_PRN2212\\SU22_PRN221\\SU22_PRN221.csproj",
         "packagesPath": "C:\\Users\\vthan\\.nuget\\packages\\",
-        "outputPath": "G:\\PRN221\\SU22_PRN221\\SU22_PRN221\\obj\\",
+        "outputPath": "C:\\Users\\vthan\\Downloads\\SU22_PRN2212\\SU22_PRN2212\\SU22_PRN221\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\vthan\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -40,6 +40,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "AspNetCoreHero.ToastNotification": {
+              "target": "Package",
+              "version": "[1.1.0, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.17, )"

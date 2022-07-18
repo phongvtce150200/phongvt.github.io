@@ -19,6 +19,8 @@ namespace SU22_PRN221.Database
         public DbSet<OrderDetails> orderDetails { get; set; }
         public DbSet<PaymentMethod> paymentMethods { get; set; }
 
+        public DbSet<ChatMessage> chatMessages { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -34,6 +36,7 @@ namespace SU22_PRN221.Database
             }
             builder.Entity<OrderDetails>().HasKey(x => new { x.OrderId, x.ProductId });
             builder.Entity<CartDetails>().HasKey(x => new { x.CartId, x.ProductId });
+
         }
     }
 }

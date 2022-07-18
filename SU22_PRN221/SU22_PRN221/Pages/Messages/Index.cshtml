@@ -1,0 +1,133 @@
+﻿@page
+@model SU22_PRN221.Pages.Messages.IndexModel
+@{
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<div class="messaging">
+  <div class="inbox_msg">
+	<div class="inbox_people" style="width: 100%">
+	  <div class="headind_srch">
+		<div class="recent_heading">
+		
+		</div>
+		
+	  </div>
+
+		<div class="mesgs" style="width: 100%">
+			<div class="msg_history" id="msg_history">
+				@foreach(var message in Model.chatMessages)
+				{
+					if(message.Type == Models.ChatMessage.Types.Receiver)
+					{
+						<div class="incoming_msg">
+							<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="admin"> </div>
+							<div class="received_msg">
+							<div class="received_withd_msg">
+								<p>@message.Content</p>
+								<span class="time_date">@message.Created.ToLocalTime()</span></div>
+							</div>
+						</div>
+					}
+					else if(message.Type == Models.ChatMessage.Types.Sender)
+					{
+						<div class="outgoing_msg">
+							<div class="sent_msg">
+							<p>@message.Content</p>
+							<span class="time_date">@message.Created.ToLocalTime()</span> </div>
+						</div>
+					}
+				}
+			</div>
+			<div class="type_msg">
+			<form class="input_msg_write" method="post" id="chat-form">
+				<input type="text" class="write_msg" placeholder="Type a message" />
+				<button class="msg_send_btn" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+			</form>
+			</div>
+		</div>
+	</div>
+  </div>
+</div>
+
+@section Scripts 
+{
+<script>
+
+	function scrollToEnd() 
+	{
+		let box = document.getElementById("msg_history");
+		box.scrollTop = box.scrollHeight;
+	}
+
+	var InComingMessage = (img, content, time) =>
+	{
+        return `
+			<div class="incoming_msg">
+				<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+				<div class="received_msg">
+				<div class="received_withd_msg">
+					<p>${content}</p>
+					<span class="time_date">${time}</span></div>
+				</div>
+			</div>
+		`;
+	}
+
+	var OutGoingMessage = (content, time) => 
+	{
+        return `
+			<div class="outgoing_msg">
+				<div class="sent_msg">
+				<p>${content}</p>
+				<span class="time_date">${time}</span> </div>
+			</div>
+		`;
+	}
+
+	function SendMessage(content) 
+	{
+        fetch("", {
+			method: "POST",
+            headers: { 
+				"Content-Type": "application/json",
+				"RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val(),
+			},
+            body: JSON.stringify(
+				content
+			),
+		});
+	}
+
+	chatConnection.on("receiveMessage", function(message) 
+	{
+        console.log(message);
+        if (message.type == 0) {
+
+            let html = OutGoingMessage(message.content, message.time);
+            console.log(html);
+            $("#msg_history").append(html);
+        }
+        else if (message.type == 1) {
+			$("#msg_history").append(InComingMessage(message.img, message.content, message.time));
+		}
+
+        scrollToEnd();
+	});
+
+	$("#chat-form").submit(function(e) {
+		e.preventDefault();
+
+		let content = $(".write_msg").val();
+		if (content.trim()) {
+			SendMessage(content);
+		}
+
+        $(".write_msg").val("");
+	});
+
+	scrollToEnd();
+
+</script>
+}

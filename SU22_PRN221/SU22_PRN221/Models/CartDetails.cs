@@ -9,13 +9,10 @@ namespace SU22_PRN221.Models
     public class CartDetails
     {
         [Key]
-        public int CartDetailsId { get; set; }
         public int CartId { get; set; }
+        [Key]
         public int ProductId { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public bool CartStatus { get; set; } = false;
-        [Column(TypeName = "Money")]
-        public decimal TotalMoney { get; set; }
+        public int Quantity { get; set; }
         [ForeignKey("CartId")]
         public virtual Cart Cart { get; set; }
         [ForeignKey("ProductId")]

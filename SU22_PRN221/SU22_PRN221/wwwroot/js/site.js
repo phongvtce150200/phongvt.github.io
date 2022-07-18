@@ -2,7 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
-$(() => {
+/*$(() => {
     LoadProData();
     var connection = new signalR.HubConnectionBuilder().withUrl("/Service/signalrServer").build();
     connection.start();
@@ -33,4 +33,4 @@ $(() => {
             }
         });
     }
-})
+})*/

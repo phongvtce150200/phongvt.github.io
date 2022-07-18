@@ -97,12 +97,10 @@ namespace SU22_PRN221.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -139,12 +137,10 @@ namespace SU22_PRN221.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -160,6 +156,12 @@ namespace SU22_PRN221.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("CartStatus")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -179,17 +181,8 @@ namespace SU22_PRN221.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CartDetailsId")
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
-
-                    b.Property<bool>("CartStatus")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("TotalMoney")
-                        .HasColumnType("Money");
 
                     b.HasKey("CartId", "ProductId");
 
@@ -219,6 +212,32 @@ namespace SU22_PRN221.Migrations
                     b.ToTable("Category");
                 });
 
+            modelBuilder.Entity("SU22_PRN221.Models.ChatMessage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ChatMessages");
+                });
+
             modelBuilder.Entity("SU22_PRN221.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
@@ -235,9 +254,6 @@ namespace SU22_PRN221.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<decimal>("Money")
-                        .HasColumnType("Money");
-
                     b.Property<bool>("OrderStatus")
                         .HasColumnType("bit");
 
@@ -247,9 +263,6 @@ namespace SU22_PRN221.Migrations
 
                     b.Property<DateTime>("ShippedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<float>("Vourcher")
-                        .HasColumnType("real");
 
                     b.HasKey("OrderId");
 
@@ -271,6 +284,9 @@ namespace SU22_PRN221.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("Money");
 
                     b.HasKey("OrderId", "ProductId");
 
@@ -495,6 +511,15 @@ namespace SU22_PRN221.Migrations
                     b.Navigation("Cart");
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("SU22_PRN221.Models.ChatMessage", b =>
+                {
+                    b.HasOne("SU22_PRN221.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SU22_PRN221.Models.Order", b =>

@@ -15,15 +15,11 @@ namespace SU22_PRN221.Models
         public DateTime CreatedDate { get; set; } = DateTime.Now;
         [Required]
         public DateTime ShippedDate { get; set; } = DateTime.Now;
-        public float Vourcher { get; set; }
         [Required]
         [Column(TypeName = "Money")]
         public decimal Freight { get; set; }
         [Required]
         public string ShipAddress { get; set; }
-        [Required]
-        [Column(TypeName = "Money")]
-        public decimal Money { get; set; }
         public bool OrderStatus { get; set; }
         [ForeignKey("Id")]
         public User User { get; set; }

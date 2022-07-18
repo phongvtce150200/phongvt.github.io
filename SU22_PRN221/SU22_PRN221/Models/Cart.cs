@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,6 +11,8 @@ namespace SU22_PRN221.Models
         [Key]
         public int CartId { get; set; }
         public string Id { get; set; }
+        public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
+        public bool CartStatus { get; set; }
         [ForeignKey("Id")]
         public User User { get; set; }
         public ICollection<CartDetails> CartDetails { get; set; }

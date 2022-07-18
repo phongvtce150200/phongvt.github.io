@@ -53,6 +53,7 @@
 	</script>
 <!--===============================================================================================-->
 	<script src="~/js/main.js"></script>
-	@*@await RenderSectionAsync("Scripts", required: false)*@
+	@await Component.InvokeAsync("Notyf")
+	@await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

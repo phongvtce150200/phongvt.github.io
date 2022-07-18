@@ -5,6 +5,7 @@
     ViewData["Title"] = "Index";
     Layout = "~/Pages/Shared/_LayoutStaff.cshtml";
 }
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 <!-- ============================================================== -->
@@ -47,6 +48,7 @@
                             <h5 class="card-header">Product</h5>
                             <div class="card-body p-0">
                                 <div class="table-responsive">
+                                    <a href="#addProductMethod" class="btn btn-success" data-toggle="modal"><i class="material-icons"></i><span>Add New Product</span></a>
                                     <table class="table">
                                         <thead class="bg-light">
                                             <tr class="border-0">
@@ -105,6 +107,7 @@
                                                         <a asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a> |
                                                         <a asp-page="./Details" asp-route-id="@item.ProductId">Details</a> |
                                                         <a asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
+                                                        
                                                     </td>
                                                 </tr>
                                             }
@@ -127,3 +130,61 @@
 <!-- ============================================================== -->
 <!-- end wrapper  -->
 <!-- ============================================================== -->
+
+
+
+<!-- Add Modal Html -->
+           <div class="container">
+  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">
+     - Insert New Product -
+  </button>  
+</div>
+
+<div class="modal fade" id="addProductMethod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header border-bottom-0">
+        <h5 class="modal-title" id="exampleModalLabel">Create Account</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="post" asp-page="Index" asp-page-handler="Create" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="email1">Product Name</label>
+            <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Product Name" name="ProductName" required>
+          </div>
+         
+          <div class="form-group">
+            <label for="password1">Price</label>
+            <input type="number" class="form-control" name="Price" placeholder="Prices">
+          </div>
+
+          <div class="form-group">
+            <label for="password1">Description</label>
+            <input type="text" class="form-control" name="Description" placeholder="Description">
+          </div>
+
+          <div class="form-group">
+            <label for="password1">Image</label>
+            <input type="file" class="form-control" name="image" placeholder="Description">
+          </div>
+
+          <div class="form-group">
+            <label for="password1">Category</label>
+            <input type="number" name="CategoryId" class="form-control"> 
+          </div>
+
+        <div class="modal-footer border-top-0 d-flex justify-content-center">
+          <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal Html -->
+
+

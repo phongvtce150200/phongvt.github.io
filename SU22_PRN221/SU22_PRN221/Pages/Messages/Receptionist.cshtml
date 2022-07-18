@@ -1,0 +1,191 @@
+﻿@page
+@model SU22_PRN221.Pages.Messages.ReceptionistModel
+@{
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="~/css/chat.css" />
+
+<div class="messaging">
+    <div class="inbox_msg">
+        <div class="inbox_people">
+            <div class="headind_srch">
+                <div class="recent_heading">
+                    <h4>Recent</h4>
+                </div>
+
+            </div>
+            <div class="inbox_chat scroll" id="inbox_chat">
+            </div>
+        </div>
+        <div class="mesgs">
+            <div class="msg_history" id="msg_history">
+                @foreach (var message in Model.ChatMessages)
+                {
+                    if (message.Type == Models.ChatMessage.Types.Sender)
+                    {
+                        <div class="incoming_msg">
+                            <div class="received_msg">
+                                <div class="received_withd_msg">
+                                    <p>@message.Content</p>
+                                    <span class="time_date">@message.Created.ToLocalTime()</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else if (message.Type == Models.ChatMessage.Types.Receiver)
+                    {
+                        <div class="outgoing_msg">
+                            <div class="sent_msg">
+                                <p>@message.Content</p>
+                                <span class="time_date">@message.Created.ToLocalTime()</span>
+                            </div>
+                        </div>
+                    }
+                }
+
+
+            </div>
+            @if (Model.validatedUserId != null)
+            {
+                <div class="type_msg">
+                    <form class="input_msg_write" method="post" id="chat-form">
+                        <input type="text" class="write_msg" placeholder="Type a message" />
+                        <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts
+    {
+    <script>
+
+        const chatConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+        chatConnection.start().then(function() {
+
+        }).catch(function() {
+
+            console.log("Connected to chathub failed!...");
+        });
+
+
+        var currentUserId = "@Model.validatedUserId";
+
+        function ChatPeople(img, username, userId) {
+            return `
+                <a href="/Messages/Receptionist?userId=${userId}" class="d-block">
+                    <div class="chat_list ${userId == currentUserId ? "active_chat" : null}">
+                      <div class="chat_people">
+                        <div class="chat_img"> <img src="${img}" alt="sunil" style="width: 40px; height: 40px;"> </div>
+                        <div class="chat_ib">
+                          <div class="text-dark">${username}</div>
+                          <div class="text-right">
+                            <i id="people_${userId}" class="badge bg-primary text-white">New</i>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </a>
+                `;
+        }
+
+        var listOfUsers = [];
+
+        function LoadPeople() {
+            $.get("/api/Chat/LoadUsers").then(function(data) {
+
+                $.each(data, function(index, value) {
+                    listOfUsers.push(value.userId);
+                    var html = ChatPeople(value.img, value.username, value.userId);
+                    $("#inbox_chat").append(html);
+                    $(`#people_${value.userId}`).hide();
+                })
+
+            });
+        }
+
+        LoadPeople();
+
+        chatConnection.on("newUserComming", function(user) {
+            console.log(user);
+            if (!listOfUsers.includes(user.userId)) {
+                var html = ChatPeople(user.img, user.username, user.userId);
+                $("#inbox_chat").prepend(html);
+            }
+
+            if (user.userId != currentUserId) {
+                $(`#people_${user.userId}`).show();
+            }
+        });
+
+        function scrollToEnd() {
+            let box = document.getElementById("msg_history");
+            box.scrollTop = box.scrollHeight;
+        }
+
+        var InComingMessage = (content, time) => {
+            return `
+                    <div class="incoming_msg">
+                        <div class="received_msg">
+                        <div class="received_withd_msg">
+                            <p>${content}</p>
+                            <span class="time_date">${time}</span></div>
+                        </div>
+                    </div>
+                `;
+        }
+
+        var OutGoingMessage = (content, time) => {
+            return `
+                    <div class="outgoing_msg">
+                        <div class="sent_msg">
+                        <p>${content}</p>
+                        <span class="time_date">${time}</span> </div>
+                    </div>
+                `;
+        }
+
+        function SendMessage(content) {
+            fetch("", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "RequestVerificationToken": $('input:hidden[name="__RequestVerificationToken"]').val(),
+                },
+                body: JSON.stringify(content),
+            });
+        }
+
+        chatConnection.on("administratorListenMessages-@Model.validatedUserId", function(message) {
+            console.log(message);
+            if (message.type == 1) {
+
+                let html = OutGoingMessage(message.content, message.time);
+                console.log(html);
+                $("#msg_history").append(html);
+            }
+            else if (message.type == 0) {
+                $("#msg_history").append(InComingMessage(message.img, message.content, message.time));
+            }
+
+            scrollToEnd();
+        });
+
+        $("#chat-form").submit(function(e) {
+            e.preventDefault();
+
+            let content = $(".write_msg").val();
+            if (content.trim()) {
+                SendMessage(content);
+            }
+
+            $(".write_msg").val("");
+        });
+
+        scrollToEnd();
+
+    </script>
+}

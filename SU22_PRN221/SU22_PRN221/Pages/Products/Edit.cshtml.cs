@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -13,14 +15,17 @@ using SU22_PRN221.Models;
 
 namespace SU22_PRN221.Pages.Products
 {
+    [Authorize(Roles = "Admin")]
     public class EditModel : PageModel
     {
         private readonly SU22_PRN221.Database.ApplicationDbContext _context;
+        private readonly INotyfService _notyf;
 
         [Obsolete]
-        public EditModel(SU22_PRN221.Database.ApplicationDbContext context)
+        public EditModel(SU22_PRN221.Database.ApplicationDbContext context, INotyfService notyf)
         {
             _context = context;
+            _notyf = notyf;
         }
 
         [BindProperty]
@@ -40,7 +45,7 @@ namespace SU22_PRN221.Pages.Products
             {
                 return NotFound();
             }
-           ViewData["CategoryId"] = new SelectList(_context.categories, "CategoryId", "CategoryId");
+            ViewData["CategoryId"] = new SelectList(_context.categories, "CategoryId", "CategoryId");
             return Page();
         }
 
@@ -50,8 +55,10 @@ namespace SU22_PRN221.Pages.Products
         [Obsolete]
         public async Task<IActionResult> OnPostAsync(IFormFile image)
         {
+
             if (!ModelState.IsValid)
             {
+                _notyf.Error("Required Fields Cant Be Null");
                 return Page();
             }
             else
@@ -90,10 +97,7 @@ namespace SU22_PRN221.Pages.Products
                     }
 
                 }
-                else
-                {
-                    Product.ImagePath = null;
-                }
+
             }
 
             _context.Attach(Product).State = EntityState.Modified;
@@ -113,7 +117,7 @@ namespace SU22_PRN221.Pages.Products
                     throw;
                 }
             }
-
+            _notyf.Success("Update Product Successfully");
             return RedirectToPage("./Index");
         }
 

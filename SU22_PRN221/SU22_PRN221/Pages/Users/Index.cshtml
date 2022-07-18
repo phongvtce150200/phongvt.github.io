@@ -1,5 +1,111 @@
 ﻿@page
 @model SU22_PRN221.Pages.Users.IndexModel
 @{
-   Layout = "~/Pages/Shared/_LayoutStaff.cshtml";
+    Layout = "~/Pages/Shared/_LayoutStaff.cshtml";
 }
+<div class="dashboard-wrapper">
+    <div class="dashboard-ecommerce">
+        <div class="container-fluid dashboard-content ">
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="page-header">
+                        <h2 class="pageheader-title">User Manage </h2>
+                        <div class="page-breadcrumb">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">User</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ecommerce-widget">
+
+
+                <div class="row">
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- recent orders  -->
+                    <!-- ============================================================== -->
+                    <div class="col-12">
+
+                        <div class="card">
+                            <h5 class="card-header">User</h5>         
+                            <div class="card-body p-0">
+                                <div class="table-responsive">
+                                    <a href="#addProductMethod" class="btn btn-success" data-toggle="modal"><i class="material-icons"></i><span>Add New Product</span></a>
+                                    <table class="table">
+                                        <thead class="bg-light">
+                                            <tr class="border-0">
+                                                
+                                                <th>
+                                                    First Name
+                                                </th>
+                                                <th>
+                                                    Last Name
+                                                </th>
+                                                <th>
+                                                    Address
+                                                </th>
+                                                <th>
+                                                    Phone
+                                                </th>
+                                                <th>
+                                                    Email
+                                                </th>
+                                                <th>
+                                                    DateCreated
+                                                </th>
+                                                
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var item in Model.List)
+                                            {
+                                                <tr>
+                                                    
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.FirstName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.LastName)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Address)
+                                                    </td>
+                                                    
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                                    </td>
+                                                   
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.Email)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                                                    </td>
+                                                    <td>
+                                                        
+                                                        <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                                                        
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- end recent orders  -->
+
+                </div>
+
+            </div>
+

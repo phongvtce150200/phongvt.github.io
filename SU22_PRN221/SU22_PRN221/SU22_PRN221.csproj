@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\**" />
+    <Content Remove="Data\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <None Remove="Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AspNetCoreHero.ToastNotification" Version="1.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
@@ -22,8 +30,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Models\" />
     <Folder Include="wwwroot\css\" />
     <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\js\" />
@@ -35,6 +41,17 @@
     <Folder Include="wwwroot\lib\jquery\" />
     <Folder Include="wwwroot\lib\jquery\dist\" />
     <Folder Include="wwwroot\login\asset\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\Messages\Index.cshtml" />
+    <None Include="Pages\Messages\Receptionist.cshtml" />
+    <None Include="Pages\Orders\Delete.cshtml" />
+    <None Include="Pages\Orders\Details.cshtml" />
+    <None Include="Pages\Orders\Edit.cshtml" />
+    <None Include="Pages\Orders\Index.cshtml" />
+    <None Include="Pages\Payment\Index.cshtml" />
+    <None Include="Pages\ProfilePage\Index.cshtml" />
   </ItemGroup>
 
 </Project>

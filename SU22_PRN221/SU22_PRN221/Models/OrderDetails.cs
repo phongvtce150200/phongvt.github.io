@@ -11,7 +11,11 @@ namespace SU22_PRN221.Models
         public int OrderId { get; set; }
         [Key]
         public int ProductId { get; set; }
+        [Required]
         public int Quantity { get; set; }
+        [Required]
+        [Column(TypeName = "Money")]
+        public decimal Total { get; set; }
         [ForeignKey("OrderId")]
         public Order Order { get; set; }
         [ForeignKey("ProductId")]
