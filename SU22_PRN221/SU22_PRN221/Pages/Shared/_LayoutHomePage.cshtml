@@ -32,7 +32,6 @@
     <link href="~/css/home/style.css" rel="stylesheet" />
     <!-- responsive style -->
     <link href="~/css/home/responsive.css" rel="stylesheet" />
-
 </head>
 
 <body>
@@ -59,7 +58,7 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav  mx-auto ">
                             <li class="nav-item active">
-                                <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" asp-page="/Home/Index">Home <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#menu">Menu</a>
@@ -390,7 +389,7 @@
     </script>
     <!-- End Google Map -->
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    @*<script src="~/js/site.js" asp-append-version="true"></script>*@
     @await Component.InvokeAsync("Notyf")
     @await RenderSectionAsync("Scripts", required: false)
 

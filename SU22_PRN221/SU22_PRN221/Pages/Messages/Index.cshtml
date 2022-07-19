@@ -53,7 +53,17 @@
 
 @section Scripts 
 {
+	<script src="~/microsoft/signalr/dist/browser/signalr.js"></script>
 <script>
+	const chatConnection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+        chatConnection.start().then(function() {
+
+        }).catch(function() {
+
+            console.log("Connected to chathub failed!...");
+        });
+
+
 
 	function scrollToEnd() 
 	{

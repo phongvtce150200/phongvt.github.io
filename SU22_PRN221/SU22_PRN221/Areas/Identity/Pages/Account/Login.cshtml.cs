@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using SU22_PRN221.Models;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Http;
 
 namespace SU22_PRN221.Areas.Identity.Pages.Account
 {
@@ -91,6 +92,7 @@ namespace SU22_PRN221.Areas.Identity.Pages.Account
                 {
                     var us = await _userManager.FindByNameAsync(Input.UserName);
                     var userInRole = await _userManager.IsInRoleAsync(us, "Admin");
+                    HttpContext.Session.SetString("username", Input.UserName);
                     if (userInRole == true)
                     {
                         return RedirectToPage("/Categories/Index");

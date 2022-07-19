@@ -33,6 +33,7 @@ namespace SU22_PRN221.Pages.Messages
         }
 
         public List<ChatMessage> chatMessages { get; set; } = new List<ChatMessage>();
+        public string validatedUserId;
 
         public IActionResult OnGet()
         {
@@ -41,6 +42,7 @@ namespace SU22_PRN221.Pages.Messages
             { 
                 var getUser = _context.Users.FirstOrDefault(x => x.UserName == getUsName);
                 User user = getUser;
+                //getUser = validatedUserId;
                 chatMessages = _context.chatMessages.Include(cm => cm.User).Where(cm => cm.UserId == user.Id)
                     .OrderByDescending(cm => cm.Created)
                     .Take(20).OrderBy(cm => cm.Created).ToList();
