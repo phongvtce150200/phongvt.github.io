@@ -42,15 +42,15 @@
                     <div class="col-12">
                         <div class="card">
                             <h5 class="card-header">Category</h5>
-                            
+
                             <div class="card-body p-0">
                                 <form asp-page-handler="SearchDate" method="post">
-                                        From Date :<input type="date" name="startdate"  />
-                                        To Date :<input type="date" name="enddate" />
-                                        <input type="submit" value="Search" class="btn btn-success" />
-                                        <a asp-page="Index">Get All Records</a>
+                                    From Date :<input type="date" name="startdate" />
+                                    To Date :<input type="date" name="enddate" />
+                                    <input type="submit" value="Search" class="btn btn-success" />
+                                    <a asp-page="Index">Get All Records</a>
 
-                                    </form>
+                                </form>
                                 <div class="table-responsive">
                                     <a href="#addCategoryMethod" class="btn btn-success" data-toggle="modal"><i class="material-icons"></i><span>Add New</span></a>
                                     <table class="table">
@@ -85,11 +85,11 @@
                                                     </td>
 
                                                     <td>
-                                                       
+
                                                         <a href="#editCategoryMethod" class="edit" data-toggle="modal">Edit</a> |
                                                         <a href="#deleteCategoryMethod" class="delete" data-toggle="modal">Delete</a>
                                                         <input type="hidden" name="id" id="id" asp-for="@item.CategoryId">
-                                                        
+
                                                     </td>
                                                 </tr>
                                             }
@@ -113,64 +113,57 @@
 
 
 <div class="modal fade" id="addCategoryMethod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header border-bottom-0">
-        <h5 class="modal-title" id="exampleModalLabel">Create Category</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="post" asp-page="Index" asp-page-handler="Create">
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="email1">Category Name</label>
-           <input type="text" class="form-control" name="categoryName" required pplaceholder="Category Name"/>
-          </div>
-         
-          
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Create Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-page="Index" asp-page-handler="Create">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="email1">Category Name</label>
+                        <input type="text" class="form-control" name="categoryName" required pplaceholder="Category Name" />
+                    </div>
 
-        <div class="modal-footer border-top-0 d-flex justify-content-center">
-          <button type="submit" class="btn btn-success">Submit</button>
+
+
+                    <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
 
 <div class="modal fade" id="editCategoryMethod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header border-bottom-0">
-        <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="post" asp-page="Index" asp-page-handler="Update">
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="email1">Category Name</label>
-           <input type="text" class="form-control" name="categoryName" required pplaceholder="Category Name"/>
-          </div>
-         
-          
-
-        <div class="modal-footer border-top-0 d-flex justify-content-center">
-          <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
-                        <input type="submit" class="btn btn-success" value="Delete" />
-                        <input type="hidden" name="id" id="id"/>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-page="Index" asp-page-handler="Update">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="email1">Category Name</label>
+                        <input type="text" class="form-control" name="categoryName" required pplaceholder="Category Name" />
+                    </div>
+                    <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
+                        <input type="submit" class="btn btn-success" value="Edit" />
+                        <input type="hidden" name="id" id="id" />
+                    </div>
+                </div>
+            </form>
         </div>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
-
-
-
-
 
 
 <div id="deleteCategoryMethod" class="modal fade">
@@ -215,7 +208,7 @@
             var id = $(this).parent().find('#id').val();
             $.ajax({
                 type: 'GET',
-                data: {id: id},
+                data: { id: id },
                 url: '@Url.Page("Index","Find")',
                 success: function(result) {
                     $('#editCategoryMethod #id').val(id)

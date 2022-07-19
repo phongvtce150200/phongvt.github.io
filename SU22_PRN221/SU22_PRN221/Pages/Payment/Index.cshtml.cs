@@ -22,6 +22,11 @@ namespace SU22_PRN221.Pages.Payment
         public Order Order { get; set; }
 
 
+        public IActionResult OnGet()
+        {
+            return Page();
+        }
+
 
         public IActionResult OnGetPayment()
         {
@@ -30,6 +35,7 @@ namespace SU22_PRN221.Pages.Payment
             cart = SessionHelper.GetObjectFromJson<List<CartDetails>>(HttpContext.Session, "cart");
             if (cart.Count == 0)
             {
+                HttpContext.Session.Remove("cart");
                 return Redirect("/Home/Index");
             }
             else
@@ -57,7 +63,7 @@ namespace SU22_PRN221.Pages.Payment
                 }
                 _context.orders.Add(Order);
                 _context.SaveChanges();
-
+                HttpContext.Session.Remove("cart");
                 return Redirect("/Payment/Index");
             }
         }

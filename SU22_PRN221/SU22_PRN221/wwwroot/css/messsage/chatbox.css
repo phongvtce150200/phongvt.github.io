@@ -1,0 +1,58 @@
+.mesgs{
+    max-width: 600px;
+    height: 800px;
+    overflow: auto;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    padding: 10px 20px;
+}
+.outgoing_msg{
+
+}
+.msg_history{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.msg_history div{
+    width: max-content;
+}
+.outgoing_msg{
+    margin-left: auto;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #1877F2;
+    color: white;
+}
+.outgoing_msg, .incoming_msg .sent_msg > p{
+    margin-bottom: 0;
+}
+
+.incoming_msg{
+    margin-right: auto;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #eeee;
+    color: black;
+}
+.type_msg{
+    margin: 0 auto;
+    width: 600px;
+}
+.input_msg_write{
+    margin-top: 5px;
+    display: flex;
+    width: 100%;
+}
+.write_msg{
+    flex-grow: 1;
+    outline: none;
+    font-size: 18px;
+    border: 1px solid #cccc;
+    padding: 5px 10px;
+}
+.msg_send_btn{
+    outline: none;
+    border: 1px solid #ccc;
+    padding: 0 10px;
+}

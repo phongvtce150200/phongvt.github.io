@@ -106,8 +106,8 @@
                                                     <td>
                                                         <a asp-page="./Edit" asp-route-id="@item.ProductId">Edit</a> |
                                                         <a asp-page="./Details" asp-route-id="@item.ProductId">Details</a> |
-                                                        <a asp-page="./Delete" asp-route-id="@item.ProductId">Delete</a>
-                                                        
+                                                        <a href="#deleteProductsMethod" class="delete" data-toggle="modal">Delete</a>
+                                                        <input type="hidden" name="id" id="id" asp-for="@item.ProductId">
                                                     </td>
                                                 </tr>
                                             }
@@ -130,61 +130,89 @@
 <!-- ============================================================== -->
 <!-- end wrapper  -->
 <!-- ============================================================== -->
-
-
-
 <!-- Add Modal Html -->
-           <div class="container">
-  <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">
-     - Insert New Product -
-  </button>  
+<div class="container">
+    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#form">
+        - Insert New Product -
+    </button>
 </div>
 
 <div class="modal fade" id="addProductMethod" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header border-bottom-0">
-        <h5 class="modal-title" id="exampleModalLabel">Create Account</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method="post" asp-page="Index" asp-page-handler="Create" enctype="multipart/form-data">
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="email1">Product Name</label>
-            <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Product Name" name="ProductName" required>
-          </div>
-         
-          <div class="form-group">
-            <label for="password1">Price</label>
-            <input type="number" class="form-control" name="Price" placeholder="Prices">
-          </div>
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <h5 class="modal-title" id="exampleModalLabel">Create Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" asp-page="Index" asp-page-handler="Create" enctype="multipart/form-data">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="email1">Product Name</label>
+                        <input type="text" class="form-control" aria-describedby="emailHelp" placeholder="Product Name" name="ProductName" required>
+                    </div>
 
-          <div class="form-group">
-            <label for="password1">Description</label>
-            <input type="text" class="form-control" name="Description" placeholder="Description">
-          </div>
+                    <div class="form-group">
+                        <label for="password1">Price</label>
+                        <input type="number" class="form-control" name="Price" placeholder="Prices">
+                    </div>
 
-          <div class="form-group">
-            <label for="password1">Image</label>
-            <input type="file" class="form-control" name="image" placeholder="Description">
-          </div>
+                    <div class="form-group">
+                        <label for="password1">Description</label>
+                        <input type="text" class="form-control" name="Description" placeholder="Description">
+                    </div>
 
-          <div class="form-group">
-            <label for="password1">Category</label>
-            <input type="number" name="CategoryId" class="form-control"> 
-          </div>
+                    <div class="form-group">
+                        <label for="password1">Image</label>
+                        <input type="file" class="form-control" name="image" placeholder="Description">
+                    </div>
 
-        <div class="modal-footer border-top-0 d-flex justify-content-center">
-          <button type="submit" class="btn btn-success">Submit</button>
+                    <div class="form-group">
+                        <label for="password1">Category</label>
+                        <input type="number" name="CategoryId" class="form-control">
+                    </div>
+
+                    <div class="modal-footer border-top-0 d-flex justify-content-center">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+            </form>
         </div>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
 
 <!-- Delete Modal Html -->
 
+<div id="deleteProductsMethod" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" asp-page="/Products/Delete">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete Products</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="modal-body">
+                        <p>Are you want to delete these record ?</p>
+                        <p class="text-warning"><small>This action cannot be undone</small></p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" />
+                        <input type="submit" class="btn btn-danger" value="Delete" />
+                        <input type="hidden" name="id" id="id" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('[data-toggle="tooltip"]').tooltip();
 
+        $('table .delete').on('click', function() {
+            var id = $(this).parent().find('#id').val();
+            $('#deleteProductsMethod #id').val(id);
+        });
+
+    });
+</script>

@@ -46,6 +46,8 @@ namespace SU22_PRN221.Pages.Products
             }
             else
             {
+                var check = _context.products.FirstOrDefault(x => x.ProductName == ProductName);
+                if (check == null) return RedirectToPage("Index");
                 if (image != null)
                 {
                     try

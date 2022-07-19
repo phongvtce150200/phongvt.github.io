@@ -12,12 +12,13 @@ using System.Linq;
 
 namespace SU22_PRN221.Pages.Carts
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ApplicationDbContext _context;
         private readonly INotyfService _notyf;
 
-        public IndexModel(ApplicationDbContext context ,INotyfService notyf)
+        public IndexModel(ApplicationDbContext context, INotyfService notyf)
         {
             _context = context;
             _notyf = notyf;
@@ -63,7 +64,10 @@ namespace SU22_PRN221.Pages.Carts
                 var pod = new Product();
                 cart = SessionHelper.GetObjectFromJson<List<CartDetails>>(HttpContext.Session, "cart");
                 if (String.IsNullOrEmpty(getUser.Address) || String.IsNullOrEmpty(getUser.PhoneNumber))
+                {
+                    _notyf.Warning("You Must be have phone number and Email for buy ");
                     return RedirectToPage("/ProfilePage/Index");
+                }
                 if (cart == null)
                 {
                     var Product = _context.products.FirstOrDefault(x => x.ProductId == id);
@@ -85,8 +89,10 @@ namespace SU22_PRN221.Pages.Carts
                     int index = Exists(cart, id);
                     if (index == -1)
                     {
+                        var getPro = _context.products.FirstOrDefault(x => x.ProductId == id);
                         cart.Add(new CartDetails
                         {
+                            ProductId = getPro.ProductId,
                             Product = _context.products.FirstOrDefault(x => x.ProductId == id),
                             Quantity = 1
                         });

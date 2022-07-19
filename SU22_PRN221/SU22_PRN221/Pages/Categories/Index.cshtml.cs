@@ -36,9 +36,15 @@ namespace SU22_PRN221.Pages.Categories
             {
                 CategoryName = categoryName
             };
-            _context.Add(addCate);
-            _context.SaveChanges();
-            _notyf.Success("Create Category Successfully");
+            var check = _context.categories.FirstOrDefault(x => x.CategoryName == categoryName);
+            if (check == null)
+            {
+                _context.Add(addCate);
+                _context.SaveChanges();
+                _notyf.Success("Create Category Successfully");
+                return RedirectToPage("Index");
+            }
+            _notyf.Warning("Category is exists");
             return RedirectToPage("Index");
         }
 
@@ -63,8 +69,14 @@ namespace SU22_PRN221.Pages.Categories
             cate.CategoryName = categoryName;
             cate.CreatedDate = DateTime.Now;
             cate.IsActive = true;
-            _context.SaveChanges();
-            _notyf.Success("Update Category Successfully");
+            var check = _context.categories.FirstOrDefault(x => x.CategoryName == categoryName);
+            if (check == null)
+            {
+                _context.SaveChanges();
+                _notyf.Success("Update Category Successfully");
+                return RedirectToPage("Index");
+            }
+            _notyf.Warning("Category is exists");
             return RedirectToPage("Index");
         }
 

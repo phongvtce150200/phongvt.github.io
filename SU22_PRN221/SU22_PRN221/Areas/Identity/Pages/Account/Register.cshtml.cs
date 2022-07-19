@@ -100,8 +100,9 @@ namespace SU22_PRN221.Areas.Identity.Pages.Account
                         await _roleManager.CreateAsync(new IdentityRole(UserRoles.Customer));
                     }
                     _logger.LogInformation("User created a new account with password.");
+                    _notyf.Success("Register Sucessfully");
                     await _userManager.AddToRoleAsync(user, UserRoles.Customer);
-                   
+
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
@@ -126,11 +127,10 @@ namespace SU22_PRN221.Areas.Identity.Pages.Account
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
-                    
+
                 }
                 _notyf.Warning("Password must be have least 1 uppercase lowercase character or number");
             }
-
             // If we got this far, something failed, redisplay form
             return Page();
         }

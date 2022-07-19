@@ -60,7 +60,7 @@ namespace SU22_PRN221.Pages.Products
             }
 
             _notyf.Success("Delete Successfully");
-            return RedirectToPage("./Index");
+            return RedirectToPage("Index");
         }
     }
 }

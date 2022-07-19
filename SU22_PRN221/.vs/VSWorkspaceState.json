@@ -2,9 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\SU22_PRN221",
+    "\\SU22_PRN221\\Models",
     "\\SU22_PRN221\\Pages",
-    "\\SU22_PRN221\\Pages\\Shared"
+    "\\SU22_PRN221\\Pages\\Messages"
   ],
-  "SelectedNode": "\\SU22_PRN221\\Pages\\Shared\\_LayoutHomePage.cshtml",
+  "SelectedNode": "\\SU22_PRN221\\Pages\\Messages\\Index.cshtml",
   "PreviewInSolutionExplorer": false
 }

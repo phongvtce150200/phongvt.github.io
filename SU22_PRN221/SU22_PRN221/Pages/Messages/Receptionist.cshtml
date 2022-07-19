@@ -1,10 +1,11 @@
 ﻿@page
 @model SU22_PRN221.Pages.Messages.ReceptionistModel
 @{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="~/css/chat.css" />
+
 
 <div class="messaging">
     <div class="inbox_msg">
@@ -46,6 +47,8 @@
 
 
             </div>
+        
+        </div>
             @if (Model.validatedUserId != null)
             {
                 <div class="type_msg">
@@ -55,7 +58,6 @@
                     </form>
                 </div>
             }
-        </div>
     </div>
 </div>
 
@@ -76,10 +78,9 @@
 
         function ChatPeople(img, username, userId) {
             return `
-                <a href="/Messages/Receptionist?userId=${userId}" class="d-block">
+                <a href="/Messages/Receptionist?userId=${userId}" class="d-block" target="_blank">
                     <div class="chat_list ${userId == currentUserId ? "active_chat" : null}">
                       <div class="chat_people">
-                        <div class="chat_img"> <img src="${img}" alt="sunil" style="width: 40px; height: 40px;"> </div>
                         <div class="chat_ib">
                           <div class="text-dark">${username}</div>
                           <div class="text-right">

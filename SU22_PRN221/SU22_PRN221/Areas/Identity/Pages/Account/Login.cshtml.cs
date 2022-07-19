@@ -146,6 +146,7 @@ namespace SU22_PRN221.Areas.Identity.Pages.Account
              _context.SaveChanges();*/
             _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+            HttpContext.Session.Remove("username");
             return RedirectToPage("/Home/Index");
 
         }

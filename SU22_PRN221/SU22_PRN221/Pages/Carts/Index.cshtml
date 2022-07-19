@@ -1,6 +1,7 @@
 ﻿@page
 @model SU22_PRN221.Pages.Carts.IndexModel
 @{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 
@@ -50,7 +51,7 @@
                                         <p><strong>@item.Product.ProductName</strong></p>
                                         <p>Description: @item.Product.Description</p>
                                         @*<button type="button" class="btn btn-primary btn-sm me-1 mb-2" data-mdb-toggle="tooltip" title="Remove item"><i class="fas fa-trash"></i></button>*@
-                                        <a class="btn btn-primary btn-sm me-1 mb-2" width="30px" asp-page="/Carts/Index" asp-page-handler="delete" asp-route-id="@item.Product.ProductId">"><i class="fas fa-trash"></i></a>
+                                        <a class="btn btn-primary btn-sm me-1 mb-2" width="30px" asp-page="/Carts/Index" asp-page-handler="delete" asp-route-id="@item.Product.ProductId"><i class="fas fa-trash"></i></a>
                                         <!-- Data -->
                                     </div>
 
